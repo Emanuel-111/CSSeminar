@@ -1,0 +1,16 @@
+import subprocess
+
+
+
+with open('teacher.txt', 'r') as file:
+   file_content = file.read()
+
+
+script_path = 'cplusplus.cpp'  
+result = subprocess.run(['python', script_path], capture_output=True, text=True)
+printed_string = result.stdout.strip()
+
+if printed_string == file_content:
+    print(f"You are correct\nTeacher = {file_content} \nStudent = {printed_string}")
+else:
+   print(f"You are incorrect\nTeacher = {file_content} \nStudent = {printed_string}")
