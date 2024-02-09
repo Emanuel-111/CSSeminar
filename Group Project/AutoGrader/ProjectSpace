@@ -6,7 +6,7 @@ with open('teacher.txt', 'r') as file:
    file_content = file.read()
 
 
-script_path = 'cplusplus.cpp'  
+script_path = 'test-case.py'  
 result = subprocess.run(['python', script_path], capture_output=True, text=True)
 printed_string = result.stdout.strip()
 
