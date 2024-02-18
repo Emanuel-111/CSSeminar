@@ -10,6 +10,7 @@ def compile_and_run_java(java_file, class_name, java_src_dir):
     except subprocess.CalledProcessError as e:
         print(f"Error occurred: {e.stderr}")
 
+#Remember to change this directory to whatever java file you have!
 java_src_dir = '/Users/emanuelluna/eclipse-workspace/Intro/src'
 java_file = f'{java_src_dir}/Hello.java'
 class_name = 'Hello'  # Make sure this matches the class name in your Java file
