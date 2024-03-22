@@ -1,0 +1,67 @@
+import tkinter as tk
+from tkinter import messagebox
+import subprocess
+
+def test_python():
+    with open('teacher.txt', 'r') as file:
+        teacher_content = file.read()
+
+    script_path = 'test-case.py'  
+    result = subprocess.run(['python', script_path], capture_output=True, text=True)
+    student_content = result.stdout.strip()
+
+    return teacher_content, student_content
+
+def test_java():
+    def compile_and_run_java(java_file, class_name, java_src_dir):
+        try:
+            # Compile the Java program
+            subprocess.run(['javac', java_file], check=True, text=True, capture_output=True)
+            # Run the compiled Java program, ensure to run from the directory containing the class files
+            run_java = subprocess.run(['java', class_name], check=True, text=True, capture_output=True, cwd=java_src_dir)
+            return run_java.stdout.strip()
+        except subprocess.CalledProcessError as e:
+            return f"Error occurred: {e.stderr}"
+
+    java_src_dir = '/Users/Loren/Documents/College/Senior Year/Semester 2/Senior Seminar/GroupProj'
+    java_file = f'{java_src_dir}/Hello.java'
+    class_name = 'Hello'  # Make sure this matches the class name in your Java file
+
+    return compile_and_run_java(java_file, class_name, java_src_dir)
+
+def run_tests():
+    choice = choice_var.get()
+    
+    if choice == 'python':
+        teacher_content, student_content = test_python()
+        if teacher_content == student_content:
+            messagebox.showinfo("Result", f"You are correct\nTeacher = {teacher_content}\nStudent = {student_content}")
+        else:
+            messagebox.showinfo("Result", f"You are incorrect\nTeacher = {teacher_content}\nStudent = {student_content}")
+    elif choice == 'java':
+        java_output = test_java()
+        messagebox.showinfo("Result", java_output)
+    else:
+        messagebox.showerror("Error", "Invalid choice. Please enter 'python' or 'java'.")
+
+# Create the main window
+root = tk.Tk()
+root.title("Code Tester")
+
+# Create a label
+label = tk.Label(root, text="Enter 'python' to test Python code or 'java' to test Java code:")
+label.pack()
+
+# Create a dropdown menu
+choices = ['python', 'java']
+choice_var = tk.StringVar(root)
+choice_var.set('python')  # Default choice
+dropdown = tk.OptionMenu(root, choice_var, *choices)
+dropdown.pack()
+
+# Create a button to run tests
+button = tk.Button(root, text="Run Tests", command=run_tests)
+button.pack()
+
+# Run the Tkinter event loop
+root.mainloop()
