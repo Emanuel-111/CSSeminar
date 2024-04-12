@@ -6,6 +6,7 @@ import code_handler
 def open_code():
     # Call the function to open the code GUI from code module
     code_handler.create_code_gui()
+    root.destroy()
 
     # Remove or comment out the messagebox since it's no longer necessary
     # messagebox.showinfo("Code Option Selected", "You selected the Code option")
